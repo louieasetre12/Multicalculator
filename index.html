@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi Calculator</title>
+  <meta name="description" content="Multi Calculator: Compute Interest, Area, and Electricity Cost instantly online.">
+  <meta name="keywords" content="calculator, interest calculator, area calculator, electricity calculator, multi calculator">
+  <meta name="author" content="Louie">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #83a4d4, #b6fbff);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background-color: #ffffffdd;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #1976D2;
+    }
+    .section {
+      display: none;
+      margin-top: 20px;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Multi Calculator</h2>
+    <select id="calcType" onchange="showSection()">
+      <option value="">-- Select Calculator Type --</option>
+      <option value="interest">Interest Calculator</option>
+      <option value="area">Area Calculator</option>
+      <option value="electricity">Electricity Cost Calculator</option>
+    </select>
+
+    <!-- Interest Calculator -->
+    <div class="section" id="interest">
+      <input type="number" id="principal" placeholder="Principal Amount">
+      <input type="number" id="rateInterest" placeholder="Interest Rate (%)">
+      <input type="number" id="time" placeholder="Time (years)">
+      <button onclick="calcInterest()">Calculate Interest</button>
+      <div class="result" id="interestResult"></div>
+    </div>
+
+    <!-- Area Calculator -->
+    <div class="section" id="area">
+      <input type="number" id="length" placeholder="Length (L)">
+      <input type="number" id="width" placeholder="Width (W)">
+      <button onclick="calcArea()">Calculate Area</button>
+      <div class="result" id="areaResult"></div>
+    </div>
+
+    <!-- Electricity Cost Calculator -->
+    <div class="section" id="electricity">
+      <input type="date" id="startDate">
+      <input type="date" id="endDate">
+      <input type="number" id="power" placeholder="Power (kW)">
+      <input type="number" id="rate" placeholder="Rate (₱ per kWh)">
+      <button onclick="calcCost()">Compute Cost</button>
+      <div class="result" id="costResult"></div>
+    </div>
+  </div>
+
+  <script>
+    function showSection() {
+      const type = document.getElementById("calcType").value;
+      const sections = ["interest", "area", "electricity"];
+      sections.forEach(sec => {
+        document.getElementById(sec).style.display = sec === type ? "block" : "none";
+      });
+    }
+
+    function calcInterest() {
+      const p = parseFloat(document.getElementById("principal").value);
+      const r = parseFloat(document.getElementById("rateInterest").value);
+      const t = parseFloat(document.getElementById("time").value);
+      if (isNaN(p) || isNaN(r) || isNaN(t)) {
+        alert("Please enter all values.");
+        return;
+      }
+      const interest = (p * r * t) / 100;
+      document.getElementById("interestResult").innerText = `Interest = ₱${interest.toFixed(2)}`;
+    }
+
+    function calcArea() {
+      const l = parseFloat(document.getElementById("length").value);
+      const w = parseFloat(document.getElementById("width").value);
+      if (isNaN(l) || isNaN(w)) {
+        alert("Please enter valid length and width.");
+        return;
+      }
+      const area = l * w;
+      document.getElementById("areaResult").innerText = `Area = ${area.toFixed(2)} sq. units`;
+    }
+
+    function calcCost() {
+      const startDate = new Date(document.getElementById('startDate').value);
+      const endDate = new Date(document.getElementById('endDate').value);
+      const power = parseFloat(document.getElementById('power').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+
+      if (isNaN(power) || isNaN(rate) || isNaN(startDate) || isNaN(endDate)) {
+        alert("Please enter correct numbers and dates.");
+        return;
+      }
+
+      const timeDiff = endDate - startDate;
+      const totalHours = timeDiff / (1000 * 60 * 60);
+
+      if (totalHours <= 0) {
+        alert("End date must be after start date.");
+        return;
+      }
+
+      const cost = power * totalHours * rate;
+      document.getElementById("costResult").innerText = `Total Cost = ₱${cost.toFixed(2)}`;
+    }
+  </script>
+
+</body></html>
