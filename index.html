@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Louie Calc</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap" rel="stylesheet">
+  
+  <!-- Adsense script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6447843207390372" crossorigin="anonymous"></script>
+
   <style>
     body {
       margin: 0;
@@ -93,6 +97,14 @@
     <button onclick="toggleMode()">Toggle Light/Dark Mode</button>
   </div>
 
+  <!-- Adsense Ad Slot -->
+  <section>
+    <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-client="ca-pub-6447843207390372" data-ad-slot="2247185500" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </section>
+
   <section>
     <h2>Basic Calculator</h2>
     <input type="number" id="num1" placeholder="Number 1">
@@ -123,21 +135,17 @@
       <option value="triangle">Triangle</option>
     </select>
 
-    <div id="areaInputs">
-      <!-- Dynamic inputs will appear here -->
-    </div>
+    <div id="areaInputs"></div>
 
     <button onclick="calculateArea()">Calculate Area</button>
     <p class="result" id="areaResult"></p>
   </section>
 
   <script>
-    // Light/Dark Mode Toggle
     function toggleMode() {
       document.body.classList.toggle('dark');
     }
 
-    // Basic Calculator
     function calculate() {
       const n1 = parseFloat(document.getElementById('num1').value);
       const n2 = parseFloat(document.getElementById('num2').value);
@@ -166,7 +174,6 @@
       resultEl.innerText = `Result: ${res}`;
     }
 
-    // BMI Calculator
     function calculateBMI() {
       const weight = parseFloat(document.getElementById('weight').value);
       const height = parseFloat(document.getElementById('height').value);
@@ -188,7 +195,6 @@
       resultEl.innerText = `BMI: ${bmi.toFixed(2)} (${category})`;
     }
 
-    // Area Calculator Inputs update
     function updateAreaInputs() {
       const shape = document.getElementById('areaShape').value;
       const areaInputs = document.getElementById('areaInputs');
@@ -209,7 +215,6 @@
       areaInputs.innerHTML = html;
     }
 
-    // Area Calculator Calculation
     function calculateArea() {
       const shape = document.getElementById('areaShape').value;
       const resultEl = document.getElementById('areaResult');
@@ -242,7 +247,7 @@
       resultEl.innerText = `Area: ${area.toFixed(2)}`;
     }
 
-    // Initialize area inputs on page load
+    // Init
     updateAreaInputs();
   </script>
 
