@@ -1,155 +1,249 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi Calculator</title>
-  <meta name="description" content="Multi Calculator: Compute Interest, Area, and Electricity Cost instantly online.">
-  <meta name="keywords" content="calculator, interest calculator, area calculator, electricity calculator, multi calculator">
-  <meta name="author" content="Louie">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Louie Calc</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #83a4d4, #b6fbff);
       margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-    .container {
-      background-color: #ffffffdd;
-      max-width: 500px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-    h2 {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
       color: #333;
-      margin-bottom: 20px;
+      transition: background 0.3s, color 0.3s;
+      padding: 1rem;
     }
-    select, input, button {
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      font-size: 16px;
+    .dark {
+      background-color: #121212;
+      color: #eee;
+    }
+    header {
+      background-color: #6200ee;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
       border-radius: 8px;
+    }
+    .toggle-mode {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .toggle-mode button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .toggle-mode button:hover {
+      background: #555;
+    }
+    section {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    }
+    .dark section {
+      background: #222;
+      box-shadow: 0 0 10px rgb(255 255 255 / 0.1);
+    }
+    section h2 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    input, select, button {
+      padding: 0.5rem;
+      margin: 0.3rem 0.5rem 0.8rem 0;
       border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      width: calc(100% - 1rem);
+      max-width: 200px;
       box-sizing: border-box;
     }
     button {
-      background-color: #2196F3;
+      background-color: #6200ee;
       color: white;
       border: none;
+      width: auto;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
     }
-    button:hover {
-      background-color: #1976D2;
-    }
-    .section {
-      display: none;
-      margin-top: 20px;
-    }
-    .result {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 18px;
-      color: #333;
+    p.result {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 0.4rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Multi Calculator</h2>
-    <select id="calcType" onchange="showSection()">
-      <option value="">-- Select Calculator Type --</option>
-      <option value="interest">Interest Calculator</option>
-      <option value="area">Area Calculator</option>
-      <option value="electricity">Electricity Cost Calculator</option>
-    </select>
-
-    <!-- Interest Calculator -->
-    <div class="section" id="interest">
-      <input type="number" id="principal" placeholder="Principal Amount">
-      <input type="number" id="rateInterest" placeholder="Interest Rate (%)">
-      <input type="number" id="time" placeholder="Time (years)">
-      <button onclick="calcInterest()">Calculate Interest</button>
-      <div class="result" id="interestResult"></div>
-    </div>
-
-    <!-- Area Calculator -->
-    <div class="section" id="area">
-      <input type="number" id="length" placeholder="Length (L)">
-      <input type="number" id="width" placeholder="Width (W)">
-      <button onclick="calcArea()">Calculate Area</button>
-      <div class="result" id="areaResult"></div>
-    </div>
-
-    <!-- Electricity Cost Calculator -->
-    <div class="section" id="electricity">
-      <input type="date" id="startDate">
-      <input type="date" id="endDate">
-      <input type="number" id="power" placeholder="Power (kW)">
-      <input type="number" id="rate" placeholder="Rate (₱ per kWh)">
-      <button onclick="calcCost()">Compute Cost</button>
-      <div class="result" id="costResult"></div>
-    </div>
+  <header>Louie Calc</header>
+  <div class="toggle-mode">
+    <button onclick="toggleMode()">Toggle Light/Dark Mode</button>
   </div>
 
+  <section>
+    <h2>Basic Calculator</h2>
+    <input type="number" id="num1" placeholder="Number 1" />
+    <input type="number" id="num2" placeholder="Number 2" />
+    <select id="operation">
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+    </select>
+    <button onclick="calculate()">Calculate</button>
+    <p class="result" id="basicResult"></p>
+  </section>
+
+  <section>
+    <h2>BMI Calculator</h2>
+    <input type="number" id="weight" placeholder="Weight (kg)" step="0.1" />
+    <input type="number" id="height" placeholder="Height (m)" step="0.01" />
+    <button onclick="calculateBMI()">Calculate BMI</button>
+    <p class="result" id="bmiResult"></p>
+  </section>
+
+  <section>
+    <h2>Area Calculator</h2>
+    <select id="areaShape" onchange="updateAreaInputs()">
+      <option value="rectangle">Rectangle</option>
+      <option value="circle">Circle</option>
+      <option value="triangle">Triangle</option>
+    </select>
+
+    <div id="areaInputs">
+      <!-- Dynamic inputs will appear here -->
+    </div>
+
+    <button onclick="calculateArea()">Calculate Area</button>
+    <p class="result" id="areaResult"></p>
+  </section>
+
   <script>
-    function showSection() {
-      const type = document.getElementById("calcType").value;
-      const sections = ["interest", "area", "electricity"];
-      sections.forEach(sec => {
-        document.getElementById(sec).style.display = sec === type ? "block" : "none";
-      });
+    // Light/Dark Mode Toggle
+    function toggleMode() {
+      document.body.classList.toggle('dark');
     }
 
-    function calcInterest() {
-      const p = parseFloat(document.getElementById("principal").value);
-      const r = parseFloat(document.getElementById("rateInterest").value);
-      const t = parseFloat(document.getElementById("time").value);
-      if (isNaN(p) || isNaN(r) || isNaN(t)) {
-        alert("Please enter all values.");
+    // Basic Calculator
+    function calculate() {
+      const n1 = parseFloat(document.getElementById('num1').value);
+      const n2 = parseFloat(document.getElementById('num2').value);
+      const op = document.getElementById('operation').value;
+      const resultEl = document.getElementById('basicResult');
+
+      if (isNaN(n1) || isNaN(n2)) {
+        resultEl.innerText = 'Please enter valid numbers.';
         return;
       }
-      const interest = (p * r * t) / 100;
-      document.getElementById("interestResult").innerText = `Interest = ₱${interest.toFixed(2)}`;
+      let res;
+      switch(op) {
+        case '+': res = n1 + n2; break;
+        case '-': res = n1 - n2; break;
+        case '*': res = n1 * n2; break;
+        case '/': 
+          if (n2 === 0) {
+            resultEl.innerText = 'Cannot divide by zero.';
+            return;
+          }
+          res = n1 / n2; break;
+        default:
+          resultEl.innerText = 'Invalid operation.';
+          return;
+      }
+      resultEl.innerText = `Result: ${res}`;
     }
 
-    function calcArea() {
-      const l = parseFloat(document.getElementById("length").value);
-      const w = parseFloat(document.getElementById("width").value);
-      if (isNaN(l) || isNaN(w)) {
-        alert("Please enter valid length and width.");
-        return;
-      }
-      const area = l * w;
-      document.getElementById("areaResult").innerText = `Area = ${area.toFixed(2)} sq. units`;
-    }
+    // BMI Calculator
+    function calculateBMI() {
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseFloat(document.getElementById('height').value);
+      const resultEl = document.getElementById('bmiResult');
 
-    function calcCost() {
-      const startDate = new Date(document.getElementById('startDate').value);
-      const endDate = new Date(document.getElementById('endDate').value);
-      const power = parseFloat(document.getElementById('power').value);
-      const rate = parseFloat(document.getElementById('rate').value);
-
-      if (isNaN(power) || isNaN(rate) || isNaN(startDate) || isNaN(endDate)) {
-        alert("Please enter correct numbers and dates.");
-        return;
-      }
-
-      const timeDiff = endDate - startDate;
-      const totalHours = timeDiff / (1000 * 60 * 60);
-
-      if (totalHours <= 0) {
-        alert("End date must be after start date.");
+      if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        resultEl.innerText = 'Please enter valid weight and height.';
         return;
       }
 
-      const cost = power * totalHours * rate;
-      document.getElementById("costResult").innerText = `Total Cost = ₱${cost.toFixed(2)}`;
+      const bmi = weight / (height * height);
+      let category = '';
+
+      if (bmi < 18.5) category = 'Underweight';
+      else if (bmi < 25) category = 'Normal weight';
+      else if (bmi < 30) category = 'Overweight';
+      else category = 'Obese';
+
+      resultEl.innerText = `BMI: ${bmi.toFixed(2)} (${category})`;
     }
+
+    // Area Calculator Inputs update
+    function updateAreaInputs() {
+      const shape = document.getElementById('areaShape').value;
+      const areaInputs = document.getElementById('areaInputs');
+      let html = '';
+      if (shape === 'rectangle') {
+        html = `
+          <input type="number" id="rectWidth" placeholder="Width" step="0.01" />
+          <input type="number" id="rectHeight" placeholder="Height" step="0.01" />
+        `;
+      } else if (shape === 'circle') {
+        html = `<input type="number" id="circleRadius" placeholder="Radius" step="0.01" />`;
+      } else if (shape === 'triangle') {
+        html = `
+          <input type="number" id="triBase" placeholder="Base" step="0.01" />
+          <input type="number" id="triHeight" placeholder="Height" step="0.01" />
+        `;
+      }
+      areaInputs.innerHTML = html;
+    }
+
+    // Area Calculator Calculation
+    function calculateArea() {
+      const shape = document.getElementById('areaShape').value;
+      const resultEl = document.getElementById('areaResult');
+      let area = 0;
+
+      if (shape === 'rectangle') {
+        const w = parseFloat(document.getElementById('rectWidth').value);
+        const h = parseFloat(document.getElementById('rectHeight').value);
+        if (isNaN(w) || isNaN(h) || w <= 0 || h <= 0) {
+          resultEl.innerText = 'Please enter valid width and height.';
+          return;
+        }
+        area = w * h;
+      } else if (shape === 'circle') {
+        const r = parseFloat(document.getElementById('circleRadius').value);
+        if (isNaN(r) || r <= 0) {
+          resultEl.innerText = 'Please enter valid radius.';
+          return;
+        }
+        area = Math.PI * r * r;
+      } else if (shape === 'triangle') {
+        const b = parseFloat(document.getElementById('triBase').value);
+        const h = parseFloat(document.getElementById('triHeight').value);
+        if (isNaN(b) || isNaN(h) || b <= 0 || h <= 0) {
+          resultEl.innerText = 'Please enter valid base and height.';
+          return;
+        }
+        area = 0.5 * b * h;
+      }
+      resultEl.innerText = `Area: ${area.toFixed(2)}`;
+    }
+
+    // Initialize area inputs on page load
+    updateAreaInputs();
   </script>
-
-</body></html>
+</body>
+</html>
