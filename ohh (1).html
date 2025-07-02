@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I Miss You</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      background-image: url('https://raw.githubusercontent.com/louieasetre12/Multicalculator/main/download%20(5).jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #startScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 999;
+    }
+
+    #startScreen button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background-color: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .falling-text {
+      position: absolute;
+      font-size: 2.5em;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-shadow: 2px 2px 5px black;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { top: -50px; opacity: 0; }
+      10% { opacity: 1; }
+      100% { top: 110vh; opacity: 0; }
+    }
+
+    #videoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      z-index: 1;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Start Screen -->
+<div id="startScreen">
+  <h1 style="color:white; text-shadow:2px 2px 5px black;">I Miss You 🥺</h1>
+  <button onclick="playVideo()">Click Me</button>
+</div>
+
+<!-- Falling Text -->
+<script>
+  function createFallingText() {
+    const text = document.createElement("div");
+    text.classList.add("falling-text");
+    text.innerText = "I Miss You 🥺";
+    text.style.left = Math.random() * 100 + "vw";
+    text.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(text);
+    setTimeout(() => text.remove(), 6000);
+  }
+
+  // Start falling effect right away
+  setInterval(createFallingText, 300);
+</script>
+
+<!-- Hidden Fullscreen Video -->
+<div id="videoContainer">
+  <video id="bgVideo" controls autoplay>
+    <source src="https://raw.githubusercontent.com/louieasetre12/Multicalculator/main/9fc62b451446fe21af28cbd3ca17a192.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<script>
+  function playVideo() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('videoContainer').style.display = 'block';
+    const video = document.getElementById('bgVideo');
+    video.play();
+  }
+</script>
+
+
+</body></html>
